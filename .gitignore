@@ -6,3 +6,5 @@ node_modules
 
 /prisma/dev.db
 .env
+
+*.log

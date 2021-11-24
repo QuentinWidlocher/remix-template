@@ -2,9 +2,10 @@
 
 With :
 
-- Remix (obviously)
-- Tailwind CSS
-- Prisma (SQLite by default)
+- [Remix](https://github.com/remix-run/remix) (obviously)
+- [Tailwind CSS](https://github.com/tailwindlabs/tailwindcss)
+- [Prisma](https://github.com/prisma/prisma) (SQLite by default)
+- [Zod](https://github.com/colinhacks/zod)
 
 ## Notes
 
