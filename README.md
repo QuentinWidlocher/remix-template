@@ -9,8 +9,16 @@ With :
 
 ## Notes
 
-To prevent double render, css is compiled from `./styles` in `.cache/postcss.ignored` and then synchronized in `./app/styles`.\
-**Don't** write css inside `./app/styles` or else it will be removed!
+A `manifest.json` and a service worker (`sw.js`) are already defined.
+
+---
+
+Hooks and utils are provided in their respective directories. They serve global applicative purpose (pagination, parsing forms, getting nested route values etc.).
+
+---
+
+CSS is compiled from `/styles` to `/app/styles`.\
+**Don't** write css inside `/app/styles` or else it will be removed!
 
 ---
 
