@@ -1,0 +1,11 @@
+{
+    "name": "Remix Template",
+    "short_name": "Remix Template",
+    "description": "",
+    "lang": "en-US",
+    "start_url": "/",
+    "display": "standalone",
+    "theme_color": "#000000",
+    "icons": [],
+    "background_color": "#FFFFFF"
+}

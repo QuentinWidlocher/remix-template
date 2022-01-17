@@ -7,34 +7,43 @@
     "seed": "node --require esbuild-register prisma/seed.ts"
   },
   "scripts": {
-    "build": "remix build",
-    "dev": "pm2-dev ./pm2.config.js",
+    "build:css": "postcss ./styles/* --dir ./app/styles",
+    "build:remix": "remix build",
+    "build": "yarn build:css && prisma migrate deploy && prisma generate && remix build",
+    "dev:css": "postcss ./styles/* --dir ./app/styles --watch",
+    "dev:remix": "remix dev",
+    "dev": "concurrently \"npm:dev:*\"",
     "postinstall": "remix setup node",
-    "start": "remix-serve build",
     "prisma": "npx prisma"
   },
   "dependencies": {
-    "@prisma/client": "^3.5.0",
-    "@remix-run/react": "^1.0.4",
-    "@remix-run/serve": "^1.0.4",
-    "pm2": "^5.1.2",
+    "@prisma/client": "^3.8.0",
+    "@remix-run/react": "^1.1.1",
+    "@remix-run/serve": "^1.1.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "remix": "^1.0.4",
+    "dotenv": "^10.0.0",
+    "remix": "^1.1.1",
+    "superjson": "^1.8.0",
     "zod": "^3.11.6"
   },
   "devDependencies": {
-    "@remix-run/dev": "^1.0.4",
+    "@remix-run/dev": "^1.1.1",
     "@types/react": "^17.0.24",
     "@types/react-dom": "^17.0.9",
     "autoprefixer": "^10.4.0",
+    "concurrently": "^6.5.0",
     "esbuild-register": "^3.2.0",
     "postcss": "^8.3.11",
     "postcss-cli": "^9.0.2",
     "postcss-import": "^14.0.2",
     "prisma": "^3.5.0",
-    "tailwindcss": "^2.2.19",
+    "tailwindcss": "3.0.7",
     "typescript": "^4.1.2"
+  },
+  "resolutions": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
   },
   "engines": {
     "node": ">=14"
