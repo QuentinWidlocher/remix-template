@@ -18,8 +18,8 @@ export default function HomePage({
 }: HomePageProps) {
   return (
     <div>
-      <h1>Home page</h1>
-      <h2>Date: {serverTime.toString()}</h2>
+      <h1 className="text-xl font-bold">Home page</h1>
+      <h2 className="text-lg opacity-50">Date: {serverTime.toString()}</h2>
 
       <section className="my-5">
         {items.map((item) => (
@@ -32,10 +32,14 @@ export default function HomePage({
 
       <nav className="space-x-5">
         {page - 1 > 0 ? (
-          <Link to={"?p=" + (page - 1)}>Previous page</Link>
+          <Link className="rounded bg-gray-200 p-3" to={"?p=" + (page - 1)}>
+            Previous page
+          </Link>
         ) : null}
         {page + 1 <= Math.ceil(total / itemsPerPage) ? (
-          <Link to={"?p=" + (page + 1)}>Next page</Link>
+          <Link className="rounded bg-gray-200 p-3" to={"?p=" + (page + 1)}>
+            Next page
+          </Link>
         ) : null}
       </nav>
     </div>
