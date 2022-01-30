@@ -10,47 +10,68 @@ With :
 - [SuperJSON](https://github.com/blitz-js/superjson) (To send complex data through loaders)
 - [Remix Utils](https://github.com/sergiodxa/remix-utils)
 
-## Notes
+## Before you start
 
-This repository contains a demo showcasing the way it's meant to be used (Styles, database, form parsing and validation, pagination and more).
+Check out the demo app if you want ([read here](#a-demo-app)).
 
-You should take a look at the demo to see how everything works, it's a very basic list + creation form.
+Then you should delete these :
 
-**Before starting** you should delete those files and folders :
-
-- `/app/features/demo`
-- `/app/routes/demo.tsx`
-- `/prisma/migration/`
-- `/prisma/demo-db.sqlite`
-
-And the `demo()` function in `/prisma/seed.ts`
+- Then entire [`/app/features/demo`](/app/features/demo) directory
+- The [`/app/routes/demo.tsx`](/app/routes/demo.tsx) file
+- The `demo()` function in [`/prisma/seed.ts`](/prisma/seed.ts)
 
 Don't forget to add a `.env` file at the root of the project and declare a `DATABASE_URL` too.
 
----
+## Features
 
-Hooks and utils are provided in their respective directories. They serve global applicative purpose (pagination, parsing forms, getting nested route values etc.).
+### A demo "app"
 
-You also have access to basic components used for forms in `/app/components` (see the demo for a use case)
+Everything mentionned below can be seen in the [`/app/features/demo`](/app/features/demo) directory. It's heavily commented so you should definitely have a look to see how I recommend using this template.
 
----
+To view this demo :
 
-This template is losely based on [Bulletproof React](https://github.com/alan2207/bulletproof-react), and provide an example of file architecture and logical structuring via the "demo" feature.
+1. Add this line to a `.env` file at the root of the project :
+   - `DATABASE_URL=file:./demo-db.sqlite?mode=memory&cache=shared`
+2. Run `yarn && yarn prisma migrate dev` to build the database
+3. Run `yarn dev` to launch the app
+4. Access the demo on `localhost:3000/demo`
 
----
+This demo is loosely based on [Bulletproof React](https://github.com/alan2207/bulletproof-react). This is simply how I prefer to organize my code but feel free to do as you please.
 
-A `manifest.json` and a service worker (`sw.js`) are already defined.
+### A Prisma ORM, ready to use
 
----
+The template comes with [Prisma](https://github.com/prisma/prisma).
 
-CSS is compiled from `/styles` to `/app/styles`.\
+You can access the Prisma client by importing `db` from [`~/utils/db.ts`](app/utils/db.server.ts).\
+This script allow reloading the Remix server without re-creating a new database connection each time.
+
+You can seed your Prisma database by updating the `seed()` function in [`/prisma/seed.ts`](/prisma/seed.ts)
+
+### Tailwind CSS
+
+The template uses PostCSS to include
+
+- [Tailwind](https://github.com/tailwindlabs/tailwindcss)
+- [Tailwind Form Reset](https://github.com/tailwindlabs/tailwindcss-forms) plugin
+- Support for [CSS Nesting](https://github.com/postcss/postcss-nested) (because it's so much easier to write custom CSS like that)
+- A [Prettier plugin](https://github.com/tailwindlabs/prettier-plugin-tailwindcss) that automatically reorder your Tailwind classes.
+
+CSS is compiled from [`/styles`](/styles) to `/app/styles`.\
 **Don't** write css inside `/app/styles` or else it will be removed!
 
----
+### Utilitary functions and components
 
-You can seed your Prisma database by updating the `seed()` function in `./prisma/seed.ts`
+A lot of utils functions and hooks are already available with [Remix Utils](https://github.com/sergiodxa/remix-utils), this template adds a bunch more like :
 
----
+- [`useCurrentRoute()`](app/hooks/useCurrentRoute.ts), to simply get the name of the current route client-side
+- [`useNestedHandleValue()`](app/hooks/useNestedHandleValue.ts), to access previously loaded data from parent routes client-side.
+- [`parseFormData()` and `safeParseFormData()`](/app/utils/formData.server.ts), using [`qs`](https://github.com/ljharb/qs) and [`zod`](https://github.com/colinhacks/zod) to powefully parse the form data. It allows to :
+  - Parse primitive directly (Numbers, dates, null/undefined, arrays, objects...)
+  - Provide a zod validator to ensure the form is correct (compatible with `<FormField/>`)
+- [`getFormAction()`](/app/utils/formData.server.ts), to quickly extract the `_action` field from a form, and ensure it's correctly typed. This field is usually used to have a single route with multiple actions. You can also use this type in the client to ensure the form provides the right type
+- [`<FormField/>`](app/components/form-field.tsx) and [`<ErrorMessage/>`](app/components/error-message.tsx), to display a form field with a label, and automatically display `ZodFormattedErrors` from your validator.
+- [`paginateLoader()`], to quickly paginate a list, coming from any source of data. It uses a `p=1` query parameter.
 
-You can access the Prisma client by importing `db` from `~/utils/db.ts`.\
-This script allow reloading the Remix server without re-creating a new database connection each time.
+### Ready to be a PWA
+
+Well, not really since Remix works server-side, but this template provide a [`manifest.json`](public/manifest.json) and a service worker ([`sw.js`](public/sw.js)) to cache requests to built files.
