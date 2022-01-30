@@ -4,6 +4,9 @@ type ErrorMessageProps = {
   className?: string;
 };
 
+/**
+ * Display a list of errors (or a single one) form ZodFormattedErrors
+ */
 export default function ErrorMessage({
   error,
   className = "",

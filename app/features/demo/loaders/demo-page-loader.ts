@@ -4,17 +4,23 @@ import { serialize } from "superjson";
 import { db } from "~/utils/db.server";
 import { Paginated, paginateLoader } from "~/utils/pagination.server";
 
-export type HomePageLoaderPayload = Paginated<
+/**
+ * We declare a return type for the loader.
+ * We'll use this inside the route to type-check the response.
+ */
+export type DemoPageLoaderPayload = Paginated<
   DemoUser & { projects: DemoProject[] }
 > & {
   serverTime: Date;
 };
 
-export const homePageLoader: LoaderFunction = async ({ request }) => {
+export const demoPageLoader: LoaderFunction = async ({ request }) => {
+  // Here we paginate the list of users
   let { items, page, totalItems, itemsPerPage } = await paginateLoader<
     DemoUser & { projects: DemoProject[] }
   >({
-    request,
+    request, // We need to provide the request to read the query params
+    // We also need a function to fetch the users for the current page
     getItems: (page, itemsPerPage) =>
       db.demoUser.findMany({
         include: { projects: true },
@@ -24,11 +30,14 @@ export const homePageLoader: LoaderFunction = async ({ request }) => {
           name: "asc",
         },
       }),
+    // We also need a function to fetch the total of users
     getTotal: () => db.demoUser.count(),
+    // And we can optionally provide the numbers of items per page
     itemsPerPage: 5,
   });
 
-  let payload: HomePageLoaderPayload = {
+  // We create a type payload to type-check the response
+  let payload: DemoPageLoaderPayload = {
     items,
     page,
     totalItems,
@@ -36,5 +45,6 @@ export const homePageLoader: LoaderFunction = async ({ request }) => {
     serverTime: new Date(),
   };
 
+  // And we use the serialize function to ensure our complex types are serialized (like dates)
   return serialize(payload);
 };

@@ -32,8 +32,10 @@ async function demo() {
 }
 
 async function seed() {
-  // Put here your seeding script
+  // REMOVE THIS
   demo();
+
+  // Put here your seeding script
 }
 
 seed();

@@ -1,24 +1,26 @@
 import { DemoProject, DemoUser } from "@prisma/client";
 import { Transition } from "@remix-run/react/transition";
-import { Form, Link } from "remix";
-import {
-  HomePageForm as HomePageFormType,
-  HomePageFormErrors,
-} from "../actions/homepage-action";
-import HomePageForm from "../components/homepage-form";
-import HomePageItem from "../components/homepage-item";
+import { Link } from "remix";
+import { DemoPageFormErrors } from "../actions/demo-page-action";
+import DemoPageForm from "../components/demo-page-form";
+import DemoPageUser from "../components/demo-page-user";
 
-interface HomePageProps {
+interface DemoPageProps {
   serverTime: Date;
   page: number;
   total: number;
   itemsPerPage: number;
   items: (DemoUser & { projects: DemoProject[] })[];
   transition: Transition;
-  errors?: HomePageFormErrors;
+  errors?: DemoPageFormErrors;
 }
 
-export default function HomePage({
+/**
+ * The page is pretty much the same as the route, expect it takes everything it need
+ * in the props instead of using the loader and action hooks.
+ * This allow the page to be used somewhere else and also keep things tidy.
+ */
+export default function DemoPage({
   serverTime,
   items,
   page,
@@ -26,19 +28,19 @@ export default function HomePage({
   itemsPerPage,
   transition,
   errors,
-}: HomePageProps) {
+}: DemoPageProps) {
   return (
     <div>
-      <h1 className="text-xl font-bold">Home page</h1>
+      <h1 className="text-xl font-bold">Demo page</h1>
       <h2 className="text-lg opacity-50">Date: {serverTime.toString()}</h2>
 
       <div className="flex space-x-5 p-5">
         <section className="flex-1">
-          <HomePageForm errors={errors} transition={transition} />
+          <DemoPageForm errors={errors} transition={transition} />
         </section>
         <section className="flex flex-1 flex-col space-y-5">
           {items.map((item) => (
-            <HomePageItem key={item.id} item={item} />
+            <DemoPageUser key={item.id} item={item} />
           ))}
 
           <nav className="space-x-5">

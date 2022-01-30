@@ -1,10 +1,13 @@
 import { DemoProject, DemoUser } from "@prisma/client";
 
-interface HomePageProps {
+interface DemoPageUserProps {
   item: DemoUser & { projects: DemoProject[] };
 }
 
-export default function HomePageItem({ item }: HomePageProps) {
+/**
+ * Just diplay a user, nothing more here
+ */
+export default function DemoPageUser({ item }: DemoPageUserProps) {
   return (
     <div className="px-1">
       {item.email ? (

@@ -1,48 +1,11 @@
-import {
-  MetaFunction,
-  useActionData,
-  useLoaderData,
-  useTransition,
-} from "remix";
-import { deserialize } from "superjson";
-import {
-  homePageAction,
-  HomePageActionPayload,
-  HomePageFormErrors,
-} from "~/features/home/actions/homepage-action";
-import {
-  homePageLoader,
-  HomePageLoaderPayload,
-} from "~/features/home/loaders/homepage-loader";
-import HomePage from "~/features/home/pages/homepage-page";
+import { MetaFunction } from "remix";
 
 export let meta: MetaFunction = () => {
   return {
-    title: "My Home page",
+    title: "Remix Template",
   };
 };
 
-export let loader = homePageLoader;
-
-export let action = homePageAction;
-
 export default function Index() {
-  let { serverTime, items, page, totalItems, itemsPerPage } =
-    deserialize<HomePageLoaderPayload>(useLoaderData());
-
-  let transition = useTransition();
-
-  let errors = useActionData<HomePageFormErrors>();
-
-  return (
-    <HomePage
-      serverTime={serverTime}
-      items={items}
-      page={page}
-      total={totalItems}
-      itemsPerPage={itemsPerPage}
-      transition={transition}
-      errors={errors}
-    />
-  );
+  return <h1 className="text-blue">Hello, World!</h1>;
 }
