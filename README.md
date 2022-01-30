@@ -7,6 +7,7 @@ With :
 - [Prisma](https://github.com/prisma/prisma) (SQLite by default)
 - [Zod](https://github.com/colinhacks/zod)
 - [SuperJSON](https://github.com/blitz-js/superjson)
+- [Remix Utils](https://github.com/sergiodxa/remix-utils)
 
 ## Notes
 
@@ -35,3 +36,7 @@ You can seed your Prisma database by updating the `seed()` function in `./prisma
 
 You can access the Prisma client by importing `db` from `~/utils/db.ts`.\
 This script allow reloading the Remix server without re-creating a new database connection each time.
+
+---
+
+Don't forget to add a `.env` file at the root of the project and declare a `DATABSE_URL`.
