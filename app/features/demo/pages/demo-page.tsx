@@ -30,11 +30,13 @@ export default function DemoPage({
   errors,
 }: DemoPageProps) {
   return (
-    <div>
-      <h1 className="text-xl font-bold">Demo page</h1>
-      <h2 className="text-lg opacity-50">Date: {serverTime.toString()}</h2>
+    <div className="p-5">
+      <div className="mb-5">
+        <h1 className="text-xl font-bold">Demo page</h1>
+        <h2 className="text-lg opacity-50">Date: {serverTime.toString()}</h2>
+      </div>
 
-      <div className="flex space-x-5 p-5">
+      <div className="flex flex-col space-y-5 md:flex-row md:space-x-5">
         <section className="flex-1">
           <DemoPageForm errors={errors} transition={transition} />
         </section>

@@ -54,8 +54,8 @@ export default function DemoPageForm({
           {Array(projectsNumber)
             .fill(0)
             .map((_, index) => (
-              <li className="my-3" key={index}>
-                <div className="flex space-x-2">
+              <li className="my-5 rounded-lg bg-gray-100 p-3" key={index}>
+                <div className="flex flex-wrap space-y-2 md:flex-nowrap md:space-x-2 md:space-y-0">
                   {/* ... as well a certains fields inside the list */}
                   <FormField
                     label="Name"
@@ -75,7 +75,7 @@ export default function DemoPageForm({
                   </FormField>
                   <FormField
                     label="Date (optional)"
-                    className="w-1/4"
+                    className="w-full md:w-1/4"
                     error={errors?.projects?.[index].date}
                   >
                     <input
@@ -88,7 +88,7 @@ export default function DemoPageForm({
               </li>
             ))}
           <li>
-            <div className="flex space-x-2">
+            <div className="mt-5 flex space-x-2">
               <button
                 className="flex-1 rounded bg-gray-200 p-1"
                 type="button"
@@ -102,7 +102,7 @@ export default function DemoPageForm({
                   type="button"
                   onClick={() => setProjectsNumber(projectsNumber - 1)}
                 >
-                  Remove Project
+                  Remove Last Project
                 </button>
               ) : null}
             </div>
@@ -117,7 +117,7 @@ export default function DemoPageForm({
         disabled={isSending}
         value={actionType}
       >
-        Create User
+        {isSending ? "Creating..." : "Create a user"}
       </button>
     </Form>
   );
