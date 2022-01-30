@@ -9,7 +9,10 @@ async function demo() {
         name: "John Doe",
         email: "john.doe@example.com",
         projects: {
-          create: [{ name: "Project 1" }, { name: "Project 2" }],
+          create: [
+            { name: "Project 1", date: new Date() },
+            { name: "Project 2" },
+          ],
         },
       },
     }),
@@ -18,7 +21,10 @@ async function demo() {
         name: "Jane Doe",
         email: "jane.doe@example.com",
         projects: {
-          create: [{ name: "Project 3" }, { name: "Project 4" }],
+          create: [
+            { name: "Project 3" },
+            { name: "Project 4", date: new Date() },
+          ],
         },
       },
     }),

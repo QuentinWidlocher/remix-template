@@ -11,8 +11,15 @@ import { getFormAction, safeParseFormData } from "~/utils/formData.server";
  */
 const demoPageFormValidator = z.object({
   name: z.string().nonempty("Name is required"),
-  email: z.string().email("Email is invalid").optional(),
-  projects: z.array(z.string().nonempty("Project is required")).default([]),
+  email: z.string().email("Must be a valid email").optional(),
+  projects: z
+    .array(
+      z.object({
+        name: z.string().nonempty("Name is required"),
+        date: z.date({ invalid_type_error: "Must be a valid date" }).optional(),
+      })
+    )
+    .default([]),
 });
 
 // We declare types for parsing the form. Success and Error.
@@ -43,19 +50,21 @@ export const demoPageAction: ActionFunction = async ({ request }) => {
       return parsed.error.format();
     }
 
+    // Here we take a shortcut because the form has the same properties as the database object
     await db.demoUser.create({
       data: {
         name: parsed.data.name,
         email: parsed.data.email,
         projects: {
           create: parsed.data.projects.map((project) => ({
-            name: project,
+            name: project.name,
+            date: project.date,
           })),
         },
       },
     });
 
-    // We don't need to return a value, but of course we could.
+    // We don't need to return a value, but of course we could send the updated value.
     return null;
   }
 

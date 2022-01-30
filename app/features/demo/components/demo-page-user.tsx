@@ -25,6 +25,11 @@ export default function DemoPageUser({ item }: DemoPageUserProps) {
         {item.projects.map((project) => (
           <li key={project.id}>
             <span>{project.name}</span>
+            {project.date ? (
+              <span className="ml-2 text-gray-500">
+                - {project.date.toLocaleDateString()}
+              </span>
+            ) : null}
           </li>
         ))}
       </ul>

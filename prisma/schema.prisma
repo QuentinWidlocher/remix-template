@@ -15,8 +15,9 @@ model DemoUser {
 }
 
 model DemoProject {
-  id     String   @id @default(uuid())
+  id     String    @id @default(uuid())
   name   String
-  user   DemoUser @relation(fields: [userId], references: [id])
+  date   DateTime?
+  user   DemoUser  @relation(fields: [userId], references: [id])
   userId String
 }

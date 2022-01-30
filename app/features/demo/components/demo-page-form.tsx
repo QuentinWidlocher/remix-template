@@ -55,20 +55,36 @@ export default function DemoPageForm({
             .fill(0)
             .map((_, index) => (
               <li className="my-3" key={index}>
-                {/* ... as well a certains fields inside the list */}
-                <FormField error={errors?.projects?.[index]}>
-                  {/* 
+                <div className="flex space-x-2">
+                  {/* ... as well a certains fields inside the list */}
+                  <FormField
+                    label="Name"
+                    className="flex-1"
+                    error={errors?.projects?.[index].name}
+                  >
+                    {/* 
                     To handle a list of fields, we just need to append [] to the name.
-                    That way we could also serialize objects with something like
-                    name="projects[][name]"
+                    To handle objects inside the list, we need to append a [key].
                   */}
-                  <input
-                    className="flex-1 rounded"
-                    type="text"
-                    name="projects[]"
-                    required
-                  />
-                </FormField>
+                    <input
+                      className="rounded"
+                      type="text"
+                      name={`projects[${index}][name]`}
+                      required
+                    />
+                  </FormField>
+                  <FormField
+                    label="Date (optional)"
+                    className="w-1/4"
+                    error={errors?.projects?.[index].date}
+                  >
+                    <input
+                      className="rounded"
+                      type="date"
+                      name={`projects[${index}][date]`}
+                    />
+                  </FormField>
+                </div>
               </li>
             ))}
           <li>

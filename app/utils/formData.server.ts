@@ -1,5 +1,68 @@
 import { z } from "zod";
-import qs from "qs";
+import qs, { IParseOptions } from "qs";
+
+// Taken from here : https://github.com/ljharb/qs/issues/91#issuecomment-522289267
+// Added support for dates
+function newDecoder(
+  parseNumbers = true,
+  parseDates = true,
+  parseBool = true,
+  ignoreNull = true,
+  ignoreEmptyString = true
+) {
+  let decoder: IParseOptions["decoder"] = (str, decoder, charset) => {
+    const strWithoutPlus = str.replace(/\+/g, " ");
+    if (charset === "iso-8859-1") {
+      // unescape never throws, no try...catch needed:
+      return strWithoutPlus.replace(/%[0-9a-f]{2}/gi, unescape);
+    }
+
+    if (parseNumbers && /^(\d+|\d*\.\d+)$/.test(str)) {
+      return parseFloat(str);
+    }
+
+    if (ignoreEmptyString && str.length === 0) {
+      return;
+    }
+
+    const keywords = {
+      null: ignoreNull ? undefined : null,
+      undefined,
+    };
+
+    if (str in keywords) {
+      //@ts-ignore - I know we're supposed to return a string, but we need this and it works
+      return keywords[str];
+    }
+
+    const boolKeywords = {
+      true: true,
+      false: false,
+    };
+
+    if (parseBool && str in boolKeywords) {
+      //@ts-ignore - I know we're supposed to return a string, but we need this and it works
+      return boolKeywords[str];
+    }
+
+    if (
+      parseDates &&
+      /^\d{4}[\/\-](0?[1-9]|1[012])[\/\-](0?[1-9]|[12][0-9]|3[01])$/.test(str)
+    ) {
+      return new Date(str);
+    }
+
+    try {
+      return decodeURIComponent(strWithoutPlus);
+    } catch (e) {
+      return strWithoutPlus;
+    }
+  };
+
+  return decoder;
+}
+
+const customDecoder = newDecoder();
 
 /**
  * Get an object with the fields from the formData
@@ -10,7 +73,7 @@ async function getObjectFromFormData(request: Request) {
   let formData = await request.formData();
   let formDataEntries = [...formData.entries()] as string[][];
   let queryParams = new URLSearchParams(formDataEntries).toString();
-  return qs.parse(queryParams);
+  return qs.parse(queryParams, { decoder: customDecoder });
 }
 
 /**
