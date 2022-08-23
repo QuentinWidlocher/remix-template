@@ -10,12 +10,12 @@ import { getFormAction, safeParseFormData } from '~/utils/formData.server'
  * to the FormField component.
  */
 const demoPageFormValidator = z.object({
-  name: z.string().nonempty('Name is required'),
+  name: z.string().min(1, 'Name is required'),
   email: z.string().email('Must be a valid email').optional(),
   projects: z
     .array(
       z.object({
-        name: z.string().nonempty('Name is required'),
+        name: z.string().min(1, 'Name is required'),
         date: z.date({ invalid_type_error: 'Must be a valid date' }).optional(),
       })
     )

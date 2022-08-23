@@ -1,11 +1,11 @@
-import { DemoProject, DemoUser } from "@prisma/client";
+import { DemoProject, DemoUser } from '@prisma/client'
 
 interface DemoPageUserProps {
-  item: DemoUser & { projects: DemoProject[] };
+  item: DemoUser & { projects: DemoProject[] }
 }
 
 /**
- * Just diplay a user, nothing more here
+ * Just display a user, nothing more here
  */
 export default function DemoPageUser({ item }: DemoPageUserProps) {
   return (
@@ -13,7 +13,7 @@ export default function DemoPageUser({ item }: DemoPageUserProps) {
       {item.email ? (
         <a
           className="text-blue-800 underline-offset-2 hover:underline"
-          href={"mailto:" + item.email}
+          href={'mailto:' + item.email}
         >
           {item.name} ({item.email})
         </a>
@@ -34,5 +34,5 @@ export default function DemoPageUser({ item }: DemoPageUserProps) {
         ))}
       </ul>
     </div>
-  );
+  )
 }
