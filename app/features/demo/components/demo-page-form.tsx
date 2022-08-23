@@ -1,15 +1,15 @@
-import { Transition } from "@remix-run/react/transition";
-import { useEffect, useRef, useState } from "react";
-import { Form } from "remix";
-import FormField from "~/components/form-field";
+import { Form } from '@remix-run/react'
+import { Transition } from '@remix-run/react/dist/transition'
+import { useEffect, useRef, useState } from 'react'
+import FormField from '~/components/form-field'
 import {
   DemoPageAvailableAction,
   DemoPageFormErrors,
-} from "../actions/demo-page-action";
+} from '../actions/demo-page-action'
 
 interface DemoPageFormProps {
-  errors?: DemoPageFormErrors;
-  transition: Transition;
+  errors?: DemoPageFormErrors
+  transition: Transition
 }
 
 /**
@@ -20,22 +20,22 @@ export default function DemoPageForm({
   transition,
 }: DemoPageFormProps) {
   // The only state we need is the number of projects in the list
-  let [projectsNumber, setProjectsNumber] = useState(0);
+  let [projectsNumber, setProjectsNumber] = useState(0)
 
   // We add a ref to the form, so we can reset it later
-  let formRef = useRef<HTMLFormElement>(null);
+  let formRef = useRef<HTMLFormElement>(null)
 
   // Here we type check the action type to always be in sync with the server
-  let actionType: DemoPageAvailableAction = "add";
+  let actionType: DemoPageAvailableAction = 'add'
 
   // This basically resets the form to its initial state after a successful submit
-  let isSending = transition.state == "submitting";
+  let isSending = transition.state == 'submitting'
   useEffect(() => {
     if (!isSending && !errors) {
-      formRef.current?.reset();
-      setProjectsNumber(0);
+      formRef.current?.reset()
+      setProjectsNumber(0)
     }
-  }, [isSending]);
+  }, [isSending])
 
   return (
     <Form ref={formRef} method="post" className="flex flex-col space-y-5">
@@ -117,8 +117,8 @@ export default function DemoPageForm({
         disabled={isSending}
         value={actionType}
       >
-        {isSending ? "Creating..." : "Create a user"}
+        {isSending ? 'Creating...' : 'Create a user'}
       </button>
     </Form>
-  );
+  )
 }

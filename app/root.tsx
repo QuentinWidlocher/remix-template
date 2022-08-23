@@ -1,40 +1,39 @@
-import * as React from "react";
 import {
-  Links,
-  LiveReload,
-  Meta,
-  MetaFunction,
   Outlet,
-  Scripts,
+  Meta,
+  Links,
   ScrollRestoration,
+  Scripts,
+  LiveReload,
   useCatch,
   useLocation,
-} from "remix";
-import type { LinksFunction } from "remix";
+} from '@remix-run/react'
+import { LinksFunction, MetaFunction } from '@remix-run/react/dist/routeModules'
+import * as React from 'react'
 
-import globalStylesUrl from "~/styles/global.css";
+import globalStylesUrl from '~/styles/global.css'
 
 export let links: LinksFunction = () => {
   return [
-    { rel: "stylesheet", href: globalStylesUrl },
-    { rel: "manifest", href: "/manifest.json" },
-  ];
-};
+    { rel: 'stylesheet', href: globalStylesUrl },
+    { rel: 'manifest', href: '/manifest.json' },
+  ]
+}
 
 // CHANGE HERE
 // And in /public/manifest.json too
 export let meta: MetaFunction = () => {
   return {
-    "mobile-web-app-capable": "yes",
-    "apple-mobile-web-app-capable": "yes",
-    "application-name": "Remix Template",
-    "apple-mobile-web-app-title": "Remix Template",
-    "theme-color": "#000000",
-    "msapplication-navbutton-color": "#000000",
-    "apple-mobile-web-app-status-bar-style": "black-translucent",
-    "msapplication-starturl": "/",
-  };
-};
+    'mobile-web-app-capable': 'yes',
+    'apple-mobile-web-app-capable': 'yes',
+    'application-name': 'Remix Template',
+    'apple-mobile-web-app-title': 'Remix Template',
+    'theme-color': '#000000',
+    'msapplication-navbutton-color': '#000000',
+    'apple-mobile-web-app-status-bar-style': 'black-translucent',
+    'msapplication-starturl': '/',
+  }
+}
 
 export default function App() {
   return (
@@ -43,15 +42,15 @@ export default function App() {
         <Outlet />
       </Layout>
     </Document>
-  );
+  )
 }
 
 function Document({
   children,
   title,
 }: {
-  children: React.ReactNode;
-  title?: string;
+  children: React.ReactNode
+  title?: string
 }) {
   return (
     <html lang="en">
@@ -70,20 +69,20 @@ function Document({
         <RouteChangeAnnouncement />
         <ScrollRestoration />
         <Scripts />
-        {process.env.NODE_ENV === "development" && <LiveReload />}
+        {process.env.NODE_ENV === 'development' && <LiveReload />}
       </body>
     </html>
-  );
+  )
 }
 
 function Layout({ children }: React.PropsWithChildren<{}>) {
-  return <div className="remix-app">{children}</div>;
+  return <div className="remix-app">{children}</div>
 }
 
 export function CatchBoundary() {
-  let caught = useCatch();
+  let caught = useCatch()
 
-  let message;
+  let message
   switch (caught.status) {
     case 401:
       message = (
@@ -91,16 +90,16 @@ export function CatchBoundary() {
           Oops! Looks like you tried to visit a page that you do not have access
           to.
         </p>
-      );
-      break;
+      )
+      break
     case 404:
       message = (
         <p>Oops! Looks like you tried to visit a page that does not exist.</p>
-      );
-      break;
+      )
+      break
 
     default:
-      throw new Error(caught.data || caught.statusText);
+      throw new Error(caught.data || caught.statusText)
   }
 
   return (
@@ -112,11 +111,11 @@ export function CatchBoundary() {
         {message}
       </Layout>
     </Document>
-  );
+  )
 }
 
 export function ErrorBoundary({ error }: { error: Error }) {
-  console.error(error);
+  console.error(error)
   return (
     <Document title="Error!">
       <Layout>
@@ -131,38 +130,38 @@ export function ErrorBoundary({ error }: { error: Error }) {
         </div>
       </Layout>
     </Document>
-  );
+  )
 }
 
 /**
  * Provides an alert for screen reader users when the route changes.
  */
 const RouteChangeAnnouncement = React.memo(() => {
-  let [hydrated, setHydrated] = React.useState(false);
-  let [innerHtml, setInnerHtml] = React.useState("");
-  let location = useLocation();
+  let [hydrated, setHydrated] = React.useState(false)
+  let [innerHtml, setInnerHtml] = React.useState('')
+  let location = useLocation()
 
   React.useEffect(() => {
-    setHydrated(true);
-  }, []);
+    setHydrated(true)
+  }, [])
 
-  let firstRenderRef = React.useRef(true);
+  let firstRenderRef = React.useRef(true)
   React.useEffect(() => {
     // Skip the first render because we don't want an announcement on the
     // initial page load.
     if (firstRenderRef.current) {
-      firstRenderRef.current = false;
-      return;
+      firstRenderRef.current = false
+      return
     }
 
-    let pageTitle = location.pathname === "/" ? "Home page" : document.title;
-    setInnerHtml(`Navigated to ${pageTitle}`);
-  }, [location.pathname]);
+    let pageTitle = location.pathname === '/' ? 'Home page' : document.title
+    setInnerHtml(`Navigated to ${pageTitle}`)
+  }, [location.pathname])
 
   // Render nothing on the server. The live region provides no value unless
   // scripts are loaded and the browser takes over normal routing.
   if (!hydrated) {
-    return null;
+    return null
   }
 
   return (
@@ -171,20 +170,20 @@ const RouteChangeAnnouncement = React.memo(() => {
       aria-atomic
       id="route-change-region"
       style={{
-        border: "0",
-        clipPath: "inset(100%)",
-        clip: "rect(0 0 0 0)",
-        height: "1px",
-        margin: "-1px",
-        overflow: "hidden",
-        padding: "0",
-        position: "absolute",
-        width: "1px",
-        whiteSpace: "nowrap",
-        wordWrap: "normal",
+        border: '0',
+        clipPath: 'inset(100%)',
+        clip: 'rect(0 0 0 0)',
+        height: '1px',
+        margin: '-1px',
+        overflow: 'hidden',
+        padding: '0',
+        position: 'absolute',
+        width: '1px',
+        whiteSpace: 'nowrap',
+        wordWrap: 'normal',
       }}
     >
       {innerHtml}
     </div>
-  );
-});
+  )
+})

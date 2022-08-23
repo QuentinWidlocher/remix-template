@@ -1,18 +1,18 @@
-import { DemoProject, DemoUser } from "@prisma/client";
-import { Transition } from "@remix-run/react/transition";
-import { Link } from "remix";
-import { DemoPageFormErrors } from "../actions/demo-page-action";
-import DemoPageForm from "../components/demo-page-form";
-import DemoPageUser from "../components/demo-page-user";
+import { DemoProject, DemoUser } from '@prisma/client'
+import { Link } from '@remix-run/react'
+import { Transition } from '@remix-run/react/dist/transition'
+import { DemoPageFormErrors } from '../actions/demo-page-action'
+import DemoPageForm from '../components/demo-page-form'
+import DemoPageUser from '../components/demo-page-user'
 
 interface DemoPageProps {
-  serverTime: Date;
-  page: number;
-  total: number;
-  itemsPerPage: number;
-  items: (DemoUser & { projects: DemoProject[] })[];
-  transition: Transition;
-  errors?: DemoPageFormErrors;
+  serverTime: Date
+  page: number
+  total: number
+  itemsPerPage: number
+  items: (DemoUser & { projects: DemoProject[] })[]
+  transition: Transition
+  errors?: DemoPageFormErrors
 }
 
 /**
@@ -47,12 +47,12 @@ export default function DemoPage({
 
           <nav className="space-x-5">
             {page - 1 > 0 ? (
-              <Link className="rounded bg-gray-200 p-3" to={"?p=" + (page - 1)}>
+              <Link className="rounded bg-gray-200 p-3" to={'?p=' + (page - 1)}>
                 Previous page
               </Link>
             ) : null}
             {page + 1 <= Math.ceil(total / itemsPerPage) ? (
-              <Link className="rounded bg-gray-200 p-3" to={"?p=" + (page + 1)}>
+              <Link className="rounded bg-gray-200 p-3" to={'?p=' + (page + 1)}>
                 Next page
               </Link>
             ) : null}
@@ -60,5 +60,5 @@ export default function DemoPage({
         </section>
       </div>
     </div>
-  );
+  )
 }

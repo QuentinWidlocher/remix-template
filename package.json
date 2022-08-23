@@ -17,39 +17,40 @@
     "prisma": "npx prisma"
   },
   "dependencies": {
-    "@prisma/client": "^3.8.0",
-    "@remix-run/react": "^1.1.1",
-    "@remix-run/serve": "^1.1.1",
-    "@tailwindcss/forms": "^0.4.0",
-    "dotenv": "^10.0.0",
-    "qs": "^6.10.3",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "remix": "^1.1.1",
-    "remix-utils": "^2.4.0",
-    "superjson": "^1.8.0",
-    "zod": "^3.11.6"
+    "@prisma/client": "^4.2.1",
+    "@remix-run/react": "^1.6.8",
+    "@remix-run/serve": "^1.6.8",
+    "@remix-run/node": "^1.6.8",
+    "@remix-run/server-runtime": "^1.6.7",
+    "@tailwindcss/forms": "^0.5.2",
+    "qs": "^6.11.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "remix": "^1.6.8",
+    "remix-utils": "^3.3.0",
+    "superjson": "^1.9.1",
+    "zod": "^3.18.0"
   },
   "devDependencies": {
-    "@remix-run/dev": "^1.1.1",
+    "@remix-run/dev": "^1.6.8",
     "@types/qs": "^6.9.7",
-    "@types/react": "^17.0.24",
-    "@types/react-dom": "^17.0.9",
-    "autoprefixer": "^10.4.0",
-    "concurrently": "^6.5.0",
-    "esbuild-register": "^3.2.0",
-    "postcss": "^8.3.11",
-    "postcss-cli": "^9.0.2",
-    "postcss-import": "^14.0.2",
-    "prettier": "^2.5.1",
-    "prettier-plugin-tailwindcss": "^0.1.4",
-    "prisma": "^3.5.0",
-    "tailwindcss": "3.0.7",
-    "typescript": "^4.1.2"
+    "@types/react": "^18.0.17",
+    "@types/react-dom": "^18.0.6",
+    "autoprefixer": "^10.4.8",
+    "concurrently": "^7.3.0",
+    "esbuild-register": "^3.3.3",
+    "postcss": "^8.4.16",
+    "postcss-cli": "^10.0.0",
+    "postcss-import": "^14.1.0",
+    "prettier": "^2.7.1",
+    "prettier-plugin-tailwindcss": "^0.1.13",
+    "prisma": "^4.2.1",
+    "tailwindcss": "^3.1.8",
+    "typescript": "^4.7.4"
   },
   "resolutions": {
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "engines": {
     "node": ">=14"
